@@ -1,12 +1,12 @@
 import numpy as np
 import cv2
-
+import math
 
 #Define object specific variables  
 dist = 0
-focal = 50
+focal = 450
 pixels = 30
-width = 18
+width = 4
 
 
 #find the distance from then camera
@@ -16,21 +16,19 @@ def get_dist(rectange_params,image):
     # print(pixels)
     #calculate distance
     dist = (width*focal)/pixels
-    # print(int(dist))
+    print(str(math.ceil(dist))+ " cm")
+    
     #Wrtie n the image
     image = cv2.putText(image, 'Distance from Camera in CM :', org, font,  
        1, color, 2, cv2.LINE_AA)
 
     image = cv2.putText(image, str(dist), (110,50), font,  
-       fontScale, color, 3, cv2.LINE_AA)
+       fontScale, color, 1, cv2.LINE_AA)
 
     return image
 
 #Extract Frames 
 cap = cv2.VideoCapture(0)
-width  = cap.get(3)  # float `width`
-height = cap.get(4) 
-# print(height,width)
 
 
 #basic constants for opencv Functs
@@ -43,7 +41,7 @@ thickness = 2
 
 
 cv2.namedWindow('Object Dist Measure ',cv2.WINDOW_NORMAL)
-cv2.resizeWindow('Object Dist Measure ', 700,700)
+cv2.resizeWindow('Object Dist Measure ', 700,600)
 
 
 #loop to capture video frames
@@ -54,8 +52,6 @@ while True:
 
 
     #predefined mask for green colour detection
-    # lower = np.array([37, 51, 24])
-    # upper = np.array([83, 104, 131])
     lower_blue = np.array([110,50,50])
     upper_blue = np.array([130,255,255])
     mask = cv2.inRange(hsv_img, lower_blue, upper_blue)
@@ -77,7 +73,6 @@ while True:
             #Draw a rectange on the contour
             rect = cv2.minAreaRect(cnt)
             box = cv2.boxPoints(rect) 
-            # print(rect)
             box = np.int0(box)
             cv2.drawContours(img,[box], -1,(255,0,0),3)
             

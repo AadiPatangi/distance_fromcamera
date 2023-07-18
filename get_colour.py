@@ -38,9 +38,11 @@ while True:
 
     hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
 
-    lower = np.array([h_min, s_min, v_min])
-    upper = np.array([h_max, s_max, v_max])
-    mask = cv2.inRange(hsv_img, lower, upper)
+    # lower = np.array([h_min, s_min, v_min])
+    # upper = np.array([h_max, s_max, v_max])
+    lower_blue = np.array([110,50,50])
+    upper_blue = np.array([130,255,255])
+    mask = cv2.inRange(hsv_img, lower_blue, upper_blue)
     kernel = np.ones((3,3),'uint8')
 
     
